@@ -17,6 +17,7 @@ public class JsonUtil {
     private static List<String> releaseDateArray = new ArrayList<>();
     private static List<String> imagePathArray   = new ArrayList<>();
     private static List<String> posterPathArray  = new ArrayList<>();
+    private static List<String> idArray          = new ArrayList<>();
 
     public static void parseMovieJson(String json) {
         Log.d("WWD", "in parseMovieJson input json is " + json);
@@ -51,6 +52,7 @@ public class JsonUtil {
         String overviewString    = "";
         String posterPathString  = "";
         String releaseDateString = "";
+        String idString          = "";
 
         if (!titlesArray.isEmpty())
             titlesArray.clear();
@@ -62,6 +64,8 @@ public class JsonUtil {
             posterPathArray.clear();
         if (!releaseDateArray.isEmpty())
             releaseDateArray.clear();
+        if (!idArray.isEmpty())
+            idArray.clear();
 
         for (int i =0 ; i < len ;i++) {
             try {
@@ -82,11 +86,15 @@ public class JsonUtil {
                 releaseDateString = result.get("release_date").toString();
                 releaseDateArray.add(releaseDateString);
 
+                idString = result.get("id").toString();
+                idArray.add(idString);
+
                 Log.d("WWD", "i = " + i + " title is " + titleString);
                 Log.d("WWD", "i = " + i + " popularity is " + popularityString);
                 Log.d("WWD", "i = " + i + " overview is " + overviewString);
                 Log.d("WWD", "i = " + i + " poster path is " + posterPathString);
                 Log.d("WWD", "i = " + i + " release date is " + releaseDateString);
+                Log.d("WWD", "i = " + i + " id is "  + idString);
                 dataRead = true;
 
             } catch (JSONException e) {
@@ -96,6 +104,102 @@ public class JsonUtil {
             }
         }
     }
+
+    public static String parseDetailJson(String json) {
+        Log.d("WWD", "in parseDetailJson input json is " + json);
+        // first convert entire response to JSON object
+        JSONObject jOBJ = null;
+        JSONObject videoObj = null;
+        JSONArray jsonVideos = null;
+        JSONObject result = null;
+        try {
+            jOBJ = new JSONObject(json);
+        } catch (JSONException e) {
+            Log.d("WWD", "exception on creating JSON object from json string");
+            e.printStackTrace();
+        }
+        Log.d("WWD", "created JSONObject form string " + jOBJ);
+
+        try {
+            videoObj = jOBJ.getJSONObject("videos");
+            Log.d("WWD", "videoObj is " + videoObj);
+        } catch (JSONException e) {
+            Log.d("WWD", "exception on parsing videos object");
+            e.printStackTrace();
+        }
+
+        try {
+            jsonVideos = new JSONArray();
+            jsonVideos  = videoObj.getJSONArray("results");
+            //String key = videoObj.get("key").toString();
+            Log.d("WWD", "jsonVideos array is "  + jsonVideos);
+        } catch (JSONException e) {
+            Log.d("WWD", "exception on parsing results array");
+            e.printStackTrace();
+        }
+
+        try {
+            result = jsonVideos.getJSONObject(0);
+        } catch (JSONException e) {
+            Log.d("WWD", "exception on parsing result from results arrary");
+            e.printStackTrace();
+        }
+
+        try {
+            String key = result.get("key").toString();
+            return key;
+        }catch (JSONException e) {
+            Log.d("WWD", "exception on parsing key  from result object");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String parseReviewJson(String json) {
+        Log.d("WWD", "in parseReviewJson input json is " + json);
+        // first convert entire response to JSON object
+        JSONObject jOBJ = null;
+        JSONArray jsonResults = null;
+        JSONObject result = null;
+        Log.d("WWD", "do first try block in parseReviewJson");
+        try {
+            jOBJ = new JSONObject(json);
+        } catch (JSONException e) {
+            Log.d("WWD", "exception on creating JSON object from json string");
+            e.printStackTrace();
+        }
+        Log.d("WWD", "created JSONObject form string " + jOBJ);
+        Log.d("WWD", "do second try block in parseReviewJson");
+        try {
+            jsonResults = new JSONArray();
+            jsonResults  = jOBJ.getJSONArray("results");
+            //String key = videoObj.get("key").toString();
+            Log.d("WWD", "jsonVideos array is "  + jsonResults);
+        } catch (JSONException e) {
+            Log.d("WWD", "exception on parsing results array");
+            e.printStackTrace();
+        }
+
+        Log.d("WWD", "do third try block in parseReviewJson");
+        try {
+            result = jsonResults.getJSONObject(0);
+        } catch (JSONException e) {
+            Log.d("WWD", "exception on parsing result from results arrary");
+            e.printStackTrace();
+        }
+
+        Log.d("WWD", "do fourth try block in parseReviewJson");
+        try {
+            String url = result.get("url").toString();
+            Log.d("WWD", " the parsed url is " + url);
+            return url;
+        }catch (JSONException e) {
+            Log.d("WWD", "exception on parsing url from result object");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static boolean getDataRead() {
         return dataRead;
     }
@@ -119,4 +223,6 @@ public class JsonUtil {
     public static String getPosterPath(int index) {
         return posterPathArray.get(index);
     }
+
+    public static String getID(int index) { return idArray.get(index); }
 }

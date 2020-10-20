@@ -4,20 +4,68 @@
     android:background="#00aa8d"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/iv_thumbnail"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        android:padding="30dp"
+        android:paddingTop="30dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_gravity="center_horizontal"
-        android:adjustViewBounds="true"/>
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/favIcon"
+            android:layout_marginTop="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00aa8d"
+            android:onClick="addFavorite"
+            android:src="@drawable/ic_star_border_black_48dp"/>
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:padding="30dp"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"/>
+    </LinearLayout>
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textSize="24sp"/>
+        android:textStyle="bold"
+        android:textSize="48sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_playtrailer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="playTrailer"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/colorAccent"
+            android:text="View Trailer" />
+        <Button
+            android:id="@+id/btn_getreviews"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="getReviews"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/colorAccent"
+            android:text="Get Reviews" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
