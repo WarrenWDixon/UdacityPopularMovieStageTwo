@@ -1,6 +1,7 @@
 package com.example.android.recyclerview;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,7 +31,7 @@ public class DetailActivity extends AppCompatActivity {
         private TextView mReleaseDate;
         private TextView mOverview;
         private ImageButton mFavIcon;
-        //public MovieViewModel mViewModel;
+        public MovieViewModel mViewModel;
 
         final String BASE_URL = "http://image.tmdb.org/t/p/w185";
 
@@ -63,7 +64,7 @@ public class DetailActivity extends AppCompatActivity {
             mReleaseDate.setText(JsonUtil.getReleaseDate(index));
             mOverview.setText(JsonUtil.getOverview(index));
             // Get a new or existing ViewModel from the ViewModelProvider.
-            //mViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+            mViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
 
             relativePath = JsonUtil.getPosterPath(index);
             Log.d("WWD", "in detail rel path is " + relativePath);
@@ -105,7 +106,7 @@ public class DetailActivity extends AppCompatActivity {
             String releaseDate = JsonUtil.getReleaseDate(index);
             String movieID     = JsonUtil.getID(index);
             Movie mMovie       = new Movie(title, popularity,overview,poster, releaseDate, movieID);
-            //mViewModel.insert(mMovie);
+            mViewModel.insert(mMovie);
         }
 
 

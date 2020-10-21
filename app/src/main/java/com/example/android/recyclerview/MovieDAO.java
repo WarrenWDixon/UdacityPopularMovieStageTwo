@@ -15,7 +15,7 @@ public interface MovieDAO {
     @Query("SELECT * FROM movie ORDER BY popularity")
     LiveData<List<Movie>> getAllMovies();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovie(Movie movie);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
@@ -23,7 +23,6 @@ public interface MovieDAO {
 
     @Delete
     void deleteMovie(Movie movie);
-
 
     @Query("DELETE FROM movie")
     public void nukeTable();

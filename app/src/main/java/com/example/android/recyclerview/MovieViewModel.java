@@ -1,6 +1,7 @@
 package com.example.android.recyclerview;
 
 import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
@@ -8,7 +9,7 @@ import android.util.Log;
 
 import java.util.List;
 
-public class MovieViewModel extends ViewModelProvider.AndroidViewModelFactory {
+public class MovieViewModel extends AndroidViewModel {
 
     private MovieRepository mRepository;
 

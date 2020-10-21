@@ -40,8 +40,8 @@ public class MovieRepository {
         @Override
         protected Void doInBackground(final Movie... params) {
             Log.d("WWD","in MovieRepository insertAsyncTask doInBackground");
-            mAsyncTaskDao.nukeTable();
-            //mAsyncTaskDao.insertMovie(params[0]);
+            //mAsyncTaskDao.nukeTable();
+            mAsyncTaskDao.insertMovie(params[0]);
             return null;
         }
     }
