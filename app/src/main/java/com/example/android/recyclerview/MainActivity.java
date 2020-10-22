@@ -15,6 +15,7 @@
  */
 package com.example.android.recyclerview;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 // COMPLETED (8) Implement GreenAdapter.ListItemClickListener from the MainActivity
 public class MainActivity extends AppCompatActivity
@@ -81,6 +83,20 @@ public class MainActivity extends AppCompatActivity
         mAdapter = new MovieAdapter(NUM_LIST_ITEMS, this);
         mMoviesList.setAdapter(mAdapter);
         MovieViewModel mViewModel2 = ViewModelProviders.of(this).get(MovieViewModel.class);
+        mViewModel2.getAllMovies().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                Log.d("WWD", " *********************************** in onChanged");
+                int numFavorites = movies.size();
+                int i;
+                if (numFavorites > 0) {
+                    for (i=0; i < numFavorites; i++) {
+                        Log.d("WWD", "favorite " + i + " is " + movies.get(i).getTitle().toString());
+                    }
+                }
+                Log.d("WWD", " *********************************** number of favorite movies is " + numFavorites);
+            }
+        });
 
     }
 
