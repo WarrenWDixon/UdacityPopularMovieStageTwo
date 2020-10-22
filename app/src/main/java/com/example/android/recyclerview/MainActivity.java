@@ -15,6 +15,7 @@
  */
 package com.example.android.recyclerview;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     private MovieAdapter mAdapter;
     private RecyclerView mMoviesList;
     private TextView mErrorMessage;
+    private MovieViewModel mViewModel2;
 
     enum SearchType {
         PopularMovies,
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity
 
         mAdapter = new MovieAdapter(NUM_LIST_ITEMS, this);
         mMoviesList.setAdapter(mAdapter);
+        MovieViewModel mViewModel2 = ViewModelProviders.of(this).get(MovieViewModel.class);
+
     }
 
     @Override
