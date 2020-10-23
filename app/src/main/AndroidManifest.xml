@@ -24,14 +24,14 @@
                 android:value="com.example.android.recyclerview.MainActivity" />
         </activity>
         <activity android:name=".WebviewActivity"
-            android:label = "YouTube Player"
+            android:label = "Movie Trailer"
             android:parentActivityName = ".DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.recyclerview.DetailActivity"/>
         </activity>
         <activity android:name=".ReviewActivity"
-            android:label = "YouTube Player"
+            android:label = "Movie Review"
             android:parentActivityName = ".DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

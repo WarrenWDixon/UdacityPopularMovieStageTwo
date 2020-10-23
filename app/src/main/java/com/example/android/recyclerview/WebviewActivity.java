@@ -17,9 +17,7 @@ public class WebviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
         mWebView = (WebView) findViewById(R.id.wv_video);
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.setWebChromeClient(new WebChromeClient() {
-
-        });
+        //mWebView.setWebChromeClient(new WebChromeClient() {});
         Intent intent = getIntent();
         String key = intent.getStringExtra(DetailActivity.VIDEO_KEY);
         Log.d("WWD", "in WebView Activity the key is " + key);
