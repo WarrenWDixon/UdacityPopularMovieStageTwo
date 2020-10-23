@@ -284,7 +284,7 @@ public class JsonUtil {
         Log.d("WWD", "in copyFavMovies favIdArray size is " + size);
         if (size > 0) {
             for (int i = 0; i < size; i++) {
-                titlesArray.add(favIdArray.get(i));
+                titlesArray.add(favTitlesArray.get(i));
                 popularityArray.add(favPopularityArray.get(i));
                 overviewArray.add(favOverviewArray.get(i));
                 posterPathArray.add(favPosterPathArray.get(i));
@@ -325,7 +325,7 @@ public class JsonUtil {
             favReleaseDateArray.add(movies.get(i).getReleaseDate());
             favIdArray.add(movies.get(i).getMovieID());
         }
-        Log.d("WWD", "at end fav Array size is " + titlesArray.size());
+        Log.d("WWD", "at end fav Array size is " + favTitlesArray.size());
     }
 
 }

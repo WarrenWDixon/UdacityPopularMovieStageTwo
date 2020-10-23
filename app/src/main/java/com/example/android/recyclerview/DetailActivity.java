@@ -99,12 +99,12 @@ public class DetailActivity extends AppCompatActivity {
 
     public void playTrailer(View view) {
             URL fetchMovieDetailsUrl;
-           // Log.d("WWD", " *******************  in playTrailer **************");
-           // Log.d("WWD", "index is " + index);
+           Log.d("WWD", " *******************  in playTrailer **************");
+           Log.d("WWD", "index is " + index);
             String ID = JsonUtil.getID(index);
-          //  Log.d("WWD", "ID is " + ID);
+          Log.d("WWD", "ID is " + ID);
             fetchMovieDetailsUrl = NetworkUtils.buildGetVideoUrl(JsonUtil.getID(index));
-           // Log.d("WWD", " ************** the details URL is  ***********" + fetchMovieDetailsUrl);
+            Log.d("WWD", " ************** the details URL is  ***********" + fetchMovieDetailsUrl);
           //  Log.d("WWD", "got further this time");
             new com.example.android.recyclerview.DetailActivity.MovieDetailTask().execute(fetchMovieDetailsUrl);
         }
@@ -180,14 +180,14 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-               // Log.d("WWD", "in MovieDetailTask onPreExecute");
+               Log.d("WWD", "in MovieDetailTask onPreExecute");
             }
 
             @Override
             protected String doInBackground(URL... params) {
                 URL searchUrl = params[0];
                 String movieResults = null;
-                //Log.d("WWD", "================================== in MovieDetailTask doInBackground   ===========================");
+                Log.d("WWD", "================================== in MovieDetailTask doInBackground   ===========================");
                 try {
                     movieResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
                 } catch (IOException e) {
@@ -198,10 +198,10 @@ public class DetailActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(String movieSearchResults) {
-                //Log.d("WWD", "detail results" + movieSearchResults);
+                Log.d("WWD", "detail results" + movieSearchResults);
                 if (NetworkUtils.getNetworkConnected()) {
                     if (movieSearchResults != null && !movieSearchResults.equals("")) {
-                       // Log.d("WWD", "got movie results");
+                        Log.d("WWD", "got movie results");
                         key = JsonUtil.parseDetailJson(movieSearchResults);
                         if (key != null) {
                             Intent intent = new Intent(context, WebviewActivity.class);
