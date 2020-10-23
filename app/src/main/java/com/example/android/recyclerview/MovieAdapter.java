@@ -55,6 +55,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ImageViewHol
         void onListItemClick(int clickedItemIndex);
     }
 
+    public void SetNumberItems(int numberItems) {
+        mNumberItems = numberItems;
+    }
 
     public MovieAdapter(int numberOfItems, ListItemClickListener listener) {
         mNumberItems = numberOfItems;

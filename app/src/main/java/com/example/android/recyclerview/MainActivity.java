@@ -93,6 +93,14 @@ public class MainActivity extends AppCompatActivity
                     for (i=0; i < numFavorites; i++) {
                         Log.d("WWD", "favorite " + i + " is " + movies.get(i).getTitle().toString());
                     }
+
+                    i = numFavorites - 1;
+                    JsonUtil.addFavId(movies.get(i).getMovieID());
+                    JsonUtil.addFavOverview(movies.get(i).getOverview());
+                    JsonUtil.addFavPopularity(movies.get(i).getPopularity());
+                    JsonUtil.addFavReleaseDate(movies.get(i).getReleaseDate());
+                    JsonUtil.addFavPosterPath(movies.get(i).getPoster());
+                    JsonUtil.addFavTitle((movies.get(i).getTitle()));
                 }
                 Log.d("WWD", " *********************************** number of favorite movies is " + numFavorites);
             }
@@ -117,9 +125,19 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_top_rated:
                 makeMovieSearchQuery(SearchType.TopRatedMovies);
                 return true;
+            case R.id.action_favorites:
+                loadMoviesFromDatabase();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void loadMoviesFromDatabase() {
+       JsonUtil.copyFavMovies();
+       int numItems = JsonUtil.getFavArraySize();
+       mAdapter.SetNumberItems(numItems);
+       mAdapter.notifyDataSetChanged();
     }
 
     // COMPLETED (10) Override ListItemClickListener's onListItemClick method
@@ -202,7 +220,7 @@ public class MainActivity extends AppCompatActivity
             if (NetworkUtils.getNetworkConnected()) {
                 showRecyclerView();
                 if (movieSearchResults != null && !movieSearchResults.equals("")) {
-                    //Log.d("WWD", "got movie results");
+                    Log.d("WWD", "got movie results");
                     JsonUtil.parseMovieJson(movieSearchResults);
                     mAdapter.notifyDataSetChanged();
                 }

@@ -19,6 +19,15 @@ public class JsonUtil {
     private static List<String> posterPathArray  = new ArrayList<>();
     private static List<String> idArray          = new ArrayList<>();
 
+    private static List<String> favTitlesArray      = new ArrayList<>();
+    private static List<String> favPopularityArray  = new ArrayList<>();
+    private static List<String> favOverviewArray    = new ArrayList<>();
+    private static List<String> favReleaseDateArray = new ArrayList<>();
+    private static List<String> favImagePathArray   = new ArrayList<>();
+    private static List<String> favPosterPathArray  = new ArrayList<>();
+    private static List<String> favIdArray          = new ArrayList<>();
+
+
     public static void parseMovieJson(String json) {
         //Log.d("WWD", "in parseMovieJson input json is " + json);
         // first convert entire response to JSON object
@@ -225,4 +234,70 @@ public class JsonUtil {
     }
 
     public static String getID(int index) { return idArray.get(index); }
+
+    public static void addFavTitle(String title) {
+        favTitlesArray.add(title);
+        Log.d("WWD","added title" + title);
+    }
+
+    public static void addFavPopularity(String popularity) {
+        favPopularityArray.add(popularity);
+        Log.d("WWD","added popularity" + popularity);
+
+    }
+
+    public static void addFavOverview(String overview) {
+        favOverviewArray.add(overview);
+        Log.d("WWD","added overview" + overview);
+    }
+
+    public static void addFavReleaseDate(String releaseDate){
+        favReleaseDateArray.add(releaseDate);
+        Log.d("WWD","added releaseDate" + releaseDate);
+    }
+
+
+    public static void addFavPosterPath(String posterPath) {
+        favPosterPathArray.add(posterPath);
+        Log.d("WWD","added posterPath" + posterPath);
+    }
+
+    public static void addFavId(String id) {
+        favIdArray.add(id);
+        Log.d("WWD","added id" + id);
+    }
+
+    public static void copyFavMovies() {
+        if (!titlesArray.isEmpty())
+            titlesArray.clear();
+        if (!popularityArray.isEmpty())
+            popularityArray.clear();
+        if (!overviewArray.isEmpty())
+            overviewArray.clear();
+        if (!posterPathArray.isEmpty())
+            posterPathArray.clear();
+        if (!releaseDateArray.isEmpty())
+            releaseDateArray.clear();
+        if (!idArray.isEmpty())
+            idArray.clear();
+        int size = favIdArray.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                titlesArray.add(favIdArray.get(i));
+                popularityArray.add(favPopularityArray.get(i));
+                overviewArray.add(favOverviewArray.get(i));
+                posterPathArray.add(favPopularityArray.get(i));
+                releaseDateArray.add(favReleaseDateArray.get(i));
+                idArray.add(favIdArray.get(i));
+            }
+        }
+        dataRead = true;
+        Log.d("WWD", "in copy arrays titlesArray size is " + titlesArray.size());
+    }
+
+    public static int getFavArraySize() {
+        return favIdArray.size();
+    }
+
+
 }
