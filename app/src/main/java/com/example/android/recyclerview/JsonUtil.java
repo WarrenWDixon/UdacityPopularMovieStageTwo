@@ -281,12 +281,13 @@ public class JsonUtil {
         if (!idArray.isEmpty())
             idArray.clear();
         int size = favIdArray.size();
+        Log.d("WWD", "in copyFavMovies favIdArray size is " + size);
         if (size > 0) {
             for (int i = 0; i < size; i++) {
                 titlesArray.add(favIdArray.get(i));
                 popularityArray.add(favPopularityArray.get(i));
                 overviewArray.add(favOverviewArray.get(i));
-                posterPathArray.add(favPopularityArray.get(i));
+                posterPathArray.add(favPosterPathArray.get(i));
                 releaseDateArray.add(favReleaseDateArray.get(i));
                 idArray.add(favIdArray.get(i));
             }
@@ -299,5 +300,32 @@ public class JsonUtil {
         return favIdArray.size();
     }
 
+    public static void updateFavoriteMovies(List<Movie> movies) {
+        int n = movies.size();
+        Log.d("WWD", "in updateFavoriteMovies movies.size is " + n);
+        if (!favTitlesArray.isEmpty())
+            favTitlesArray.clear();
+        if (!favPopularityArray.isEmpty())
+            favPopularityArray.clear();
+        if (!favOverviewArray.isEmpty())
+            favOverviewArray.clear();
+        if (!favPosterPathArray.isEmpty())
+            favPosterPathArray.clear();
+        if (!favReleaseDateArray.isEmpty())
+            favReleaseDateArray.clear();
+        if (!favIdArray.isEmpty())
+            favIdArray.clear();
+
+        for(int i = 0; i < n; i++) {
+            Log.d("WWD", "i = " + i + " title is " + movies.get(i).getTitle());
+            favTitlesArray.add(movies.get(i).getTitle());
+            favPopularityArray.add(movies.get(i).getPopularity());
+            favOverviewArray.add(movies.get(i).getOverview());
+            favPosterPathArray.add(movies.get(i).getPoster());
+            favReleaseDateArray.add(movies.get(i).getReleaseDate());
+            favIdArray.add(movies.get(i).getMovieID());
+        }
+        Log.d("WWD", "at end fav Array size is " + titlesArray.size());
+    }
 
 }

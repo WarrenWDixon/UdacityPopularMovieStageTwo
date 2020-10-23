@@ -89,20 +89,8 @@ public class MainActivity extends AppCompatActivity
                 Log.d("WWD", " *********************************** in onChanged");
                 int numFavorites = movies.size();
                 int i;
-                if (numFavorites > 0) {
-                    for (i=0; i < numFavorites; i++) {
-                        Log.d("WWD", "favorite " + i + " is " + movies.get(i).getTitle().toString());
-                    }
-
-                    i = numFavorites - 1;
-                    JsonUtil.addFavId(movies.get(i).getMovieID());
-                    JsonUtil.addFavOverview(movies.get(i).getOverview());
-                    JsonUtil.addFavPopularity(movies.get(i).getPopularity());
-                    JsonUtil.addFavReleaseDate(movies.get(i).getReleaseDate());
-                    JsonUtil.addFavPosterPath(movies.get(i).getPoster());
-                    JsonUtil.addFavTitle((movies.get(i).getTitle()));
-                }
-                Log.d("WWD", " *********************************** number of favorite movies is " + numFavorites);
+                Log.d("WWD", "numFavorites is " + numFavorites);
+                JsonUtil.updateFavoriteMovies(movies);
             }
         });
 

@@ -88,8 +88,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ImageViewHol
         ImageViewHolder viewHolder = new ImageViewHolder(view);
 
         viewHolderCount++;
-        //Log.d(TAG, "onCreateViewHolder: number of ViewHolders created: "
-//                + viewHolderCount);
+        Log.d(TAG, "onCreateViewHolder: number of ViewHolders created: " + viewHolderCount);
         return viewHolder;
     }
 
@@ -105,7 +104,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ImageViewHol
      */
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
-        //Log.d("WWD", "#" + position);
+        Log.d("WWD", "#" + position);
         holder.bind(position);
     }
 
@@ -133,14 +132,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ImageViewHol
         }
 
         void bind(int listIndex) {
-            //Log.d("WWD", "in bind listIndex is " + listIndex);
+            Log.d("WWD", "in bind listIndex is " + listIndex);
             final String BASE_URL = "http://image.tmdb.org/t/p/w185";
             String relativePath = new String();
             String fullPath     = new String();
             if (NetworkUtils.getNetworkConnected()) {
                 if (JsonUtil.getDataRead()) {
                     relativePath = JsonUtil.getPosterPath(listIndex);
-                    //Log.d("WWD", "in bind rel path is " + relativePath);
+                    Log.d("WWD", "in bind rel path is " + relativePath);
 
                     fullPath = BASE_URL + relativePath;
                     Picasso.get().load(fullPath).into(mImageView);
