@@ -25,7 +25,7 @@ public class MovieRepository {
     // wrapper for insert method, must use AsyncTask to call insert() on non-UI thread or app will crash
     // Room ensures no long-running operations on the main thread which would block UI
     public void insert (Movie movie) {
-        Log.d("WWD", "in repository insert call insertAsyncTask");
+        //Log.d("WWD", "in repository insert call insertAsyncTask");
         new insertAsyncTask(mMovieDAO).execute(movie);
     }
 
@@ -39,7 +39,7 @@ public class MovieRepository {
 
         @Override
         protected Void doInBackground(final Movie... params) {
-            Log.d("WWD","in MovieRepository insertAsyncTask doInBackground");
+           // Log.d("WWD","in MovieRepository insertAsyncTask doInBackground");
             //mAsyncTaskDao.nukeTable();
             mAsyncTaskDao.insertMovie(params[0]);
             return null;

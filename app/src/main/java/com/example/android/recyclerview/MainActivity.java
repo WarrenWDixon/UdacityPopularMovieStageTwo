@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        Log.d("WWD", "In onOptionsItemSelected");
+        //Log.d("WWD", "In onOptionsItemSelected");
         switch (itemId) {
             case R.id.action_popular:
                 makeMovieSearchQuery(SearchType.PopularMovies);
@@ -143,13 +143,13 @@ public class MainActivity extends AppCompatActivity
         if (NetworkUtils.getNetworkConnected()) {
             Intent myIntent = new Intent(this, DetailActivity.class);
             myIntent.putExtra("intIndex", clickedItemIndex);
-            Log.d("WWD", "starting detail activity");
+           // Log.d("WWD", "starting detail activity");
             startActivity(myIntent);
         }
     }
 
     private void makeMovieSearchQuery(SearchType type) {
-        Log.d("WWD", "in MovieSearchQuery");
+        //Log.d("WWD", "in MovieSearchQuery");
         URL fetchMovieUrl;
         if (type == SearchType.PopularMovies)
            fetchMovieUrl = NetworkUtils.buildPopularUrl();
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity
         protected String doInBackground(URL... params) {
             URL searchUrl = params[0];
             String movieResults = null;
-            Log.d("WWD", "in doInBackground");
+            //Log.d("WWD", "in doInBackground");
             try {
                 movieResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
             } catch (IOException e) {
@@ -198,11 +198,11 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(String movieSearchResults) {
-            Log.d("WWD", "in onPostExecute");
+            //Log.d("WWD", "in onPostExecute");
             if (NetworkUtils.getNetworkConnected()) {
                 showRecyclerView();
                 if (movieSearchResults != null && !movieSearchResults.equals("")) {
-                    Log.d("WWD", "got movie results");
+                    //Log.d("WWD", "got movie results");
                     JsonUtil.parseMovieJson(movieSearchResults);
                     mAdapter.notifyDataSetChanged();
                 }

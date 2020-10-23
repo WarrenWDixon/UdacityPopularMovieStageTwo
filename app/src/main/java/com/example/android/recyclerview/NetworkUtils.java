@@ -95,7 +95,7 @@ public class NetworkUtils {
          */
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        Log.d("WWD", "in getResponseFromHttpUrl url is " + url);
+       // Log.d("WWD", "in getResponseFromHttpUrl url is " + url);
         try {
             InputStream in = urlConnection.getInputStream();
             if (in == null) {
@@ -112,7 +112,7 @@ public class NetworkUtils {
 
             boolean hasInput = scanner.hasNext();
             if (hasInput) {
-                Log.d("WWD", "read data from Movie database");
+               // Log.d("WWD", "read data from Movie database");
                 return scanner.next();
             } else {
                 Log.d("WWD", "no data read from Movie database ");

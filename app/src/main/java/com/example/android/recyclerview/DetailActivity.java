@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -37,10 +38,14 @@ public class DetailActivity extends AppCompatActivity {
 
         public static final String VIDEO_KEY = "VIDEO_KEY";
         public static final String REVIEW_URL = "REVIEW_URL";
+        private final String INDEX_KEY = "index";
+
 
         private String key = null;
         private int index;
         private Context context;
+        private SharedPreferences mPreferences;
+        private String sharedPrefFile = "com.example.android.recyclerview.moviesharedprefs";
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,14 @@ public class DetailActivity extends AppCompatActivity {
             String fullPath = new String();
             Intent intent = getIntent();
             index = intent.getIntExtra("intIndex", 0);
+            if (index != 0) {
+                SaveIndex.StoreIndex(index);
+                Log.d("WWD", "callind SaveIndex " + index);
+            } else {
+                index = SaveIndex.getStoredIndex();
+                Log.d("WWD", "read stored index " + index);
+            }
+            SaveIndex.StoreIndex(index);
             Log.d("WWD", "in detail activity index is " + index);
             mThumbnail = (ImageView) findViewById(R.id.iv_thumbnail);
             mTitle = (TextView) findViewById(R.id.tv_title);
@@ -67,34 +80,43 @@ public class DetailActivity extends AppCompatActivity {
             mViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
 
             relativePath = JsonUtil.getPosterPath(index);
-            Log.d("WWD", "in detail rel path is " + relativePath);
+            //Log.d("WWD", "in detail rel path is " + relativePath);
 
             fullPath = BASE_URL + relativePath;
-            Log.d("WWD", "full path is " + fullPath);
+            //Log.d("WWD", "full path is " + fullPath);
             Picasso.get().load(fullPath).into(mThumbnail);
 
         }
 
-        public void playTrailer(View view) {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("WWD", "in onPause doing preferences logic");
+        /* SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putInt(INDEX_KEY, index);
+        preferencesEditor.apply(); */
+    }
+
+    public void playTrailer(View view) {
             URL fetchMovieDetailsUrl;
-            Log.d("WWD", " *******************  in playTrailer **************");
-            Log.d("WWD", "index is " + index);
+           // Log.d("WWD", " *******************  in playTrailer **************");
+           // Log.d("WWD", "index is " + index);
             String ID = JsonUtil.getID(index);
-            Log.d("WWD", "ID is " + ID);
+          //  Log.d("WWD", "ID is " + ID);
             fetchMovieDetailsUrl = NetworkUtils.buildGetVideoUrl(JsonUtil.getID(index));
-            Log.d("WWD", " ************** the details URL is  ***********" + fetchMovieDetailsUrl);
-            Log.d("WWD", "got further this time");
+           // Log.d("WWD", " ************** the details URL is  ***********" + fetchMovieDetailsUrl);
+          //  Log.d("WWD", "got further this time");
             new com.example.android.recyclerview.DetailActivity.MovieDetailTask().execute(fetchMovieDetailsUrl);
         }
 
         public void getReviews(View view) {
             URL fetchMovieReviewsUrl;
-            Log.d("WWD", " *******************  in getReviews **************");
-            Log.d("WWD", "index is " + index);
+           // Log.d("WWD", " *******************  in getReviews **************");
+           // Log.d("WWD", "index is " + index);
             String ID = JsonUtil.getID(index);
-            Log.d("WWD", "ID is " + ID);
+          //  Log.d("WWD", "ID is " + ID);
             fetchMovieReviewsUrl = NetworkUtils.buildGetReviewsUrl(JsonUtil.getID(index));
-            Log.d("WWD", " ************** the review URL is  ***********" + fetchMovieReviewsUrl);
+          //  Log.d("WWD", " ************** the review URL is  ***********" + fetchMovieReviewsUrl);
             new com.example.android.recyclerview.DetailActivity.MovieReviewTask().execute(fetchMovieReviewsUrl);
         }
 
@@ -111,7 +133,7 @@ public class DetailActivity extends AppCompatActivity {
 
 
         public void addFavorite(View view) {
-            Log.d("WWD", "in addFavorite");
+           // Log.d("WWD", "in addFavorite");
 
             final AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
                     com.example.android.recyclerview.DetailActivity.this);
@@ -158,14 +180,14 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                Log.d("WWD", "in MovieDetailTask onPreExecute");
+               // Log.d("WWD", "in MovieDetailTask onPreExecute");
             }
 
             @Override
             protected String doInBackground(URL... params) {
                 URL searchUrl = params[0];
                 String movieResults = null;
-                Log.d("WWD", "================================== in MovieDetailTask doInBackground   ===========================");
+                //Log.d("WWD", "================================== in MovieDetailTask doInBackground   ===========================");
                 try {
                     movieResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
                 } catch (IOException e) {
@@ -176,10 +198,10 @@ public class DetailActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(String movieSearchResults) {
-                Log.d("WWD", "detail results" + movieSearchResults);
+                //Log.d("WWD", "detail results" + movieSearchResults);
                 if (NetworkUtils.getNetworkConnected()) {
                     if (movieSearchResults != null && !movieSearchResults.equals("")) {
-                        Log.d("WWD", "got movie results");
+                       // Log.d("WWD", "got movie results");
                         key = JsonUtil.parseDetailJson(movieSearchResults);
                         if (key != null) {
                             Intent intent = new Intent(context, WebviewActivity.class);
@@ -200,14 +222,14 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                Log.d("WWD", "in MovieReviewTask onPreExecute");
+               // Log.d("WWD", "in MovieReviewTask onPreExecute");
             }
 
             @Override
             protected String doInBackground(URL... params) {
                 URL searchUrl = params[0];
                 String movieReviews = null;
-                Log.d("WWD", "================================== in MovieReviewTask doInBackground   ===========================");
+               // Log.d("WWD", "================================== in MovieReviewTask doInBackground   ===========================");
                 try {
                     movieReviews = NetworkUtils.getResponseFromHttpUrl(searchUrl);
                 } catch (IOException e) {
@@ -218,13 +240,13 @@ public class DetailActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(String movieReviews) {
-                Log.d("WWD", "review results" + movieReviews);
+               // Log.d("WWD", "review results" + movieReviews);
                 if (NetworkUtils.getNetworkConnected()) {
                     if (movieReviews != null && !movieReviews.equals("")) {
-                        Log.d("WWD", "got movie reviews" + movieReviews);
+                      //  Log.d("WWD", "got movie reviews" + movieReviews);
                         String url = JsonUtil.parseReviewJson(movieReviews);
                         if (url != null) {
-                            Log.d("WWD", "url not null so create intent");
+                          //  Log.d("WWD", "url not null so create intent");
                             Intent intent = new Intent(context, ReviewActivity.class);
                             intent.putExtra(REVIEW_URL, url);
                             startActivity(intent);
