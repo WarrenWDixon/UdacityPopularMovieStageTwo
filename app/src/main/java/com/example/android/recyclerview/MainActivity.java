@@ -125,6 +125,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void loadMoviesFromDatabase() {
+        if (JsonUtil.checkForZeroFavorites()) {
+            Intent intent = new Intent(MainActivity.this, EmptyFavorites.class);
+            startActivity(intent);
+            return;
+        }
        JsonUtil.copyFavMovies();
        int numItems = JsonUtil.getFavArraySize();
        mAdapter.SetNumberItems(numItems);
