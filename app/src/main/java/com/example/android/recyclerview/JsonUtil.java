@@ -328,4 +328,23 @@ public class JsonUtil {
         Log.d("WWD", "at end fav Array size is " + favTitlesArray.size());
     }
 
+    public static boolean isMovieFavorite(String id) {
+        Log.d("WWD", "in isMovieFavorite id is " + id);
+        int n = favTitlesArray.size();
+        for (int i = 0; i < n; i++) {
+            Log.d("WWD","i = " + i + " favId is " + favIdArray.get(i));
+            if (favIdArray.get(i).equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkForZeroFavorites() {
+        if (favTitlesArray.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity
 
         mAdapter = new MovieAdapter(NUM_LIST_ITEMS, this);
         mMoviesList.setAdapter(mAdapter);
+        mAdapter.SetNumberItems(NUM_LIST_ITEMS);
         MovieViewModel mViewModel2 = ViewModelProviders.of(this).get(MovieViewModel.class);
         mViewModel2.getAllMovies().observe(this, new Observer<List<Movie>>() {
             @Override
@@ -108,9 +109,11 @@ public class MainActivity extends AppCompatActivity
         //Log.d("WWD", "In onOptionsItemSelected");
         switch (itemId) {
             case R.id.action_popular:
+                mAdapter.SetNumberItems(NUM_LIST_ITEMS);
                 makeMovieSearchQuery(SearchType.PopularMovies);
                 return true;
             case R.id.action_top_rated:
+                mAdapter.SetNumberItems(NUM_LIST_ITEMS);
                 makeMovieSearchQuery(SearchType.TopRatedMovies);
                 return true;
             case R.id.action_favorites:
@@ -158,7 +161,7 @@ public class MainActivity extends AppCompatActivity
         //Log.d("WWD", "in MovieSearchQuery");
         URL fetchMovieUrl;
         if (type == SearchType.PopularMovies)
-           fetchMovieUrl = NetworkUtils.buildPopularUrl();
+            fetchMovieUrl = NetworkUtils.buildPopularUrl();
         else
             fetchMovieUrl = NetworkUtils.buildTopRatedUrl();
         new MovieQueryTask().execute(fetchMovieUrl);

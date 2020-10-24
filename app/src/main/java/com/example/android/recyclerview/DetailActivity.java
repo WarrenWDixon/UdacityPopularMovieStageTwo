@@ -49,6 +49,7 @@ public class DetailActivity extends AppCompatActivity {
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+            String mId;
             super.onCreate(savedInstanceState);
             context = this;
             setContentView(R.layout.movie_detail);
@@ -73,6 +74,10 @@ public class DetailActivity extends AppCompatActivity {
             mFavIcon  = (ImageButton) findViewById(R.id.favIcon);
 
             mTitle.setText(JsonUtil.getTitle(index));
+            mId = JsonUtil.getID(index);
+            if (JsonUtil.isMovieFavorite(mId)) {
+                mFavIcon.setImageResource(R.drawable.ic_star_black_48dp);
+            }
             mVoteAverage.setText(JsonUtil.getPopularity(index));
             mReleaseDate.setText(JsonUtil.getReleaseDate(index));
             mOverview.setText(JsonUtil.getOverview(index));
