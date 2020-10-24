@@ -29,7 +29,6 @@ public class JsonUtil {
 
 
     public static void parseMovieJson(String json) {
-        //Log.d("WWD", "in parseMovieJson input json is " + json);
         // first convert entire response to JSON object
         JSONObject jOBJ = null;
         try {
@@ -38,7 +37,6 @@ public class JsonUtil {
             Log.d("WWD", "exception on creating JSON object from json string");
             e.printStackTrace();
         }
-       // Log.d("WWD", "created JSONObject form string " + jOBJ);
 
         // parse out results array of objects from response
         JSONArray jsonResults = new JSONArray();
@@ -49,9 +47,7 @@ public class JsonUtil {
             e.printStackTrace();
         }
 
-        //Log.d("WWD", "jsonResults is " + jsonResults);
         int len = jsonResults.length();
-       // Log.d("WWD", "length of Results array is " + len);
 
         // create arrays and Strings to hold data
         List<String> results          = new ArrayList<>();
@@ -98,12 +94,6 @@ public class JsonUtil {
                 idString = result.get("id").toString();
                 idArray.add(idString);
 
-               // Log.d("WWD", "i = " + i + " title is " + titleString);
-               // Log.d("WWD", "i = " + i + " popularity is " + popularityString);
-              //  Log.d("WWD", "i = " + i + " overview is " + overviewString);
-              //  Log.d("WWD", "i = " + i + " poster path is " + posterPathString);
-              //  Log.d("WWD", "i = " + i + " release date is " + releaseDateString);
-              //  Log.d("WWD", "i = " + i + " id is "  + idString);
                 dataRead = true;
 
             } catch (JSONException e) {
@@ -115,7 +105,6 @@ public class JsonUtil {
     }
 
     public static String parseDetailJson(String json) {
-       // Log.d("WWD", "in parseDetailJson input json is " + json);
         // first convert entire response to JSON object
         JSONObject jOBJ = null;
         JSONObject videoObj = null;
@@ -124,33 +113,26 @@ public class JsonUtil {
         try {
             jOBJ = new JSONObject(json);
         } catch (JSONException e) {
-            Log.d("WWD", "exception on creating JSON object from json string");
             e.printStackTrace();
         }
-       // Log.d("WWD", "created JSONObject form string " + jOBJ);
 
         try {
             videoObj = jOBJ.getJSONObject("videos");
            // Log.d("WWD", "videoObj is " + videoObj);
         } catch (JSONException e) {
-            Log.d("WWD", "exception on parsing videos object");
             e.printStackTrace();
         }
 
         try {
             jsonVideos = new JSONArray();
             jsonVideos  = videoObj.getJSONArray("results");
-            //String key = videoObj.get("key").toString();
-          //  Log.d("WWD", "jsonVideos array is "  + jsonVideos);
         } catch (JSONException e) {
-            Log.d("WWD", "exception on parsing results array");
             e.printStackTrace();
         }
 
         try {
             result = jsonVideos.getJSONObject(0);
         } catch (JSONException e) {
-            Log.d("WWD", "exception on parsing result from results arrary");
             e.printStackTrace();
         }
 
@@ -158,52 +140,38 @@ public class JsonUtil {
             String key = result.get("key").toString();
             return key;
         }catch (JSONException e) {
-            Log.d("WWD", "exception on parsing key  from result object");
             e.printStackTrace();
         }
         return null;
     }
 
     public static String parseReviewJson(String json) {
-       // Log.d("WWD", "in parseReviewJson input json is " + json);
         // first convert entire response to JSON object
         JSONObject jOBJ = null;
         JSONArray jsonResults = null;
         JSONObject result = null;
-       // Log.d("WWD", "do first try block in parseReviewJson");
         try {
             jOBJ = new JSONObject(json);
         } catch (JSONException e) {
-            Log.d("WWD", "exception on creating JSON object from json string");
             e.printStackTrace();
         }
-       // Log.d("WWD", "created JSONObject form string " + jOBJ);
-       // Log.d("WWD", "do second try block in parseReviewJson");
         try {
             jsonResults = new JSONArray();
             jsonResults  = jOBJ.getJSONArray("results");
-            //String key = videoObj.get("key").toString();
-           // Log.d("WWD", "jsonVideos array is "  + jsonResults);
         } catch (JSONException e) {
-            Log.d("WWD", "exception on parsing results array");
             e.printStackTrace();
         }
 
-       // Log.d("WWD", "do third try block in parseReviewJson");
         try {
             result = jsonResults.getJSONObject(0);
         } catch (JSONException e) {
-            Log.d("WWD", "exception on parsing result from results arrary");
             e.printStackTrace();
         }
 
-       // Log.d("WWD", "do fourth try block in parseReviewJson");
         try {
             String url = result.get("url").toString();
-            Log.d("WWD", " the parsed url is " + url);
             return url;
         }catch (JSONException e) {
-            Log.d("WWD", "exception on parsing url from result object");
             e.printStackTrace();
         }
         return null;
@@ -237,12 +205,10 @@ public class JsonUtil {
 
     public static void addFavTitle(String title) {
         favTitlesArray.add(title);
-        Log.d("WWD","added title" + title);
     }
 
     public static void addFavPopularity(String popularity) {
         favPopularityArray.add(popularity);
-        Log.d("WWD","added popularity" + popularity);
 
     }
 
@@ -253,18 +219,15 @@ public class JsonUtil {
 
     public static void addFavReleaseDate(String releaseDate){
         favReleaseDateArray.add(releaseDate);
-        Log.d("WWD","added releaseDate" + releaseDate);
     }
 
 
     public static void addFavPosterPath(String posterPath) {
         favPosterPathArray.add(posterPath);
-        Log.d("WWD","added posterPath" + posterPath);
     }
 
     public static void addFavId(String id) {
         favIdArray.add(id);
-        Log.d("WWD","added id" + id);
     }
 
     public static void copyFavMovies() {
@@ -281,7 +244,6 @@ public class JsonUtil {
         if (!idArray.isEmpty())
             idArray.clear();
         int size = favIdArray.size();
-        Log.d("WWD", "in copyFavMovies favIdArray size is " + size);
         if (size > 0) {
             for (int i = 0; i < size; i++) {
                 titlesArray.add(favTitlesArray.get(i));
@@ -293,7 +255,6 @@ public class JsonUtil {
             }
         }
         dataRead = true;
-        Log.d("WWD", "in copy arrays titlesArray size is " + titlesArray.size());
     }
 
     public static int getFavArraySize() {

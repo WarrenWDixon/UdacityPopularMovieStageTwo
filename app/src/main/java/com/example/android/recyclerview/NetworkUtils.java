@@ -100,11 +100,9 @@ public class NetworkUtils {
             InputStream in = urlConnection.getInputStream();
             if (in == null) {
                 networkConnected = false;
-                Log.d("WWD", "network connection failed");
             }
             else {
                 networkConnected = true;
-                Log.d("WWD", "network connection worked");
             }
 
             Scanner scanner = new Scanner(in);
@@ -112,10 +110,8 @@ public class NetworkUtils {
 
             boolean hasInput = scanner.hasNext();
             if (hasInput) {
-               // Log.d("WWD", "read data from Movie database");
                 return scanner.next();
             } else {
-                Log.d("WWD", "no data read from Movie database ");
                 return null;
             }
         } finally {

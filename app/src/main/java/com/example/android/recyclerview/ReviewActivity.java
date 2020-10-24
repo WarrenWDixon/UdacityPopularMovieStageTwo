@@ -14,7 +14,6 @@ public class ReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("WWD", "in ReviewActivity onCreate function");
         setContentView(R.layout.activity_webview);
         mWebView = (WebView) findViewById(R.id.wv_video);
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -23,7 +22,6 @@ public class ReviewActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         String url = intent.getStringExtra(DetailActivity.REVIEW_URL);
-        Log.d("WWD", "in WebView Activity the URL is " + url);
         mWebView.loadUrl(url);
     }
 }

@@ -34,16 +34,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-// COMPLETED (8) Implement GreenAdapter.ListItemClickListener from the MainActivity
 public class MainActivity extends AppCompatActivity
         implements MovieAdapter.ListItemClickListener {
 
     private static final int NUM_LIST_ITEMS = 20;
 
-    /*
-     * References to RecyclerView and Adapter to reset the list to its
-     * "pretty" state when the reset menu item is clicked.
-     */
     private MovieAdapter mAdapter;
     private RecyclerView mMoviesList;
     private TextView mErrorMessage;
@@ -54,12 +49,6 @@ public class MainActivity extends AppCompatActivity
         TopRatedMovies
     }
 
-    // COMPLETED (9) Create a Toast variable called mToast to store the current Toast
-    /*
-     * If we hold a reference to our Toast, we can cancel it (if it's showing)
-     * to display a new Toast. If we didn't do this, Toasts would be delayed
-     * in showing up if you clicked many list items in quick succession.
-     */
     private Toast mToast;
 
     @Override
@@ -87,10 +76,8 @@ public class MainActivity extends AppCompatActivity
         mViewModel2.getAllMovies().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
-                Log.d("WWD", " *********************************** in onChanged");
                 int numFavorites = movies.size();
                 int i;
-                Log.d("WWD", "numFavorites is " + numFavorites);
                 JsonUtil.updateFavoriteMovies(movies);
             }
         });
@@ -106,7 +93,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        //Log.d("WWD", "In onOptionsItemSelected");
         switch (itemId) {
             case R.id.action_popular:
                 mAdapter.SetNumberItems(NUM_LIST_ITEMS);
@@ -136,34 +122,16 @@ public class MainActivity extends AppCompatActivity
        mAdapter.notifyDataSetChanged();
     }
 
-    // COMPLETED (10) Override ListItemClickListener's onListItemClick method
-    /**
-     * This is where we receive our callback from
-     * {@link MovieAdapter.ListItemClickListener}
-     *
-     * This callback is invoked when you click on an item in the list.
-     *
-     * @param clickedItemIndex Index in the list of the item that was clicked.
-     */
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        /* if (mToast != null) {
-            mToast.cancel();
-        }
-        String toastMessage = "Item #" + clickedItemIndex + " clicked.";
-        mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
-
-        mToast.show(); */
         if (NetworkUtils.getNetworkConnected()) {
             Intent myIntent = new Intent(this, DetailActivity.class);
             myIntent.putExtra("intIndex", clickedItemIndex);
-           // Log.d("WWD", "starting detail activity");
             startActivity(myIntent);
         }
     }
 
     private void makeMovieSearchQuery(SearchType type) {
-        //Log.d("WWD", "in MovieSearchQuery");
         URL fetchMovieUrl;
         if (type == SearchType.PopularMovies)
             fetchMovieUrl = NetworkUtils.buildPopularUrl();
@@ -177,14 +145,12 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //mLoadingIndicator.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected String doInBackground(URL... params) {
             URL searchUrl = params[0];
             String movieResults = null;
-            //Log.d("WWD", "in doInBackground");
             try {
                 movieResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
             } catch (IOException e) {
@@ -212,7 +178,6 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(String movieSearchResults) {
-            //Log.d("WWD", "in onPostExecute");
             if (NetworkUtils.getNetworkConnected()) {
                 showRecyclerView();
                 if (movieSearchResults != null && !movieSearchResults.equals("")) {

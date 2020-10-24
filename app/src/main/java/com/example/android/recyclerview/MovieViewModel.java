@@ -33,7 +33,6 @@ public class MovieViewModel extends AndroidViewModel {
     // create wrapper insert() method that calls Repository's insert() method,
     // implementation of insert() is hidden from UI
     public void insert(Movie movie) {
-        Log.d("WWD", "in MovieViewModel insert, call repository insert");
         mRepository.insert(movie);
     }
 }

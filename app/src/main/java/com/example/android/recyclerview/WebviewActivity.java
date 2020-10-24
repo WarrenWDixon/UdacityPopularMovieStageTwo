@@ -20,9 +20,7 @@ public class WebviewActivity extends AppCompatActivity {
         //mWebView.setWebChromeClient(new WebChromeClient() {});
         Intent intent = getIntent();
         String key = intent.getStringExtra(DetailActivity.VIDEO_KEY);
-        Log.d("WWD", "in WebView Activity the key is " + key);
         String youtubeURL = YOUTUBE_URL + key;
-        Log.d("WWD", "the video url is " + youtubeURL);
         mWebView.loadUrl(youtubeURL);
     }
 }
